@@ -1,0 +1,55 @@
+import csv
+import json
+
+# Read data from CSV file
+def read_csv(input_path):
+    with open(input_path, "r") as f:
+        reader = csv.DictReader(f)
+        return list(reader)
+
+
+# Write data to JSON file
+def write_json(output_path, data):
+    with open(output_path, "w") as f:
+        json.dump(data, f, indent=4)
+
+
+# Convert CSV file to JSON file
+def convert_csv_to_json(input_path, output_path):
+    data = read_csv(input_path)
+    write_json(output_path, data)
+    return data
+
+
+# Main program
+if __name__ == "__main__":
+    input_file = "students.csv"
+    output_file = "students.json"
+
+    # Creating sample CSV file
+    sample_data = [
+        ["id", "name", "department", "marks"],
+        ["1", "Piyush", "CSE", "88"],
+        ["2", "Amit", "CSE", "76"],
+        ["3", "Riya", "ENTC", "92"]
+    ]
+
+    with open(input_file, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerows(sample_data)
+
+    print("CSV file created:", input_file)
+
+    # Read and display CSV data
+    with open(input_file, "r") as f:
+        print("\nCSV file data:")
+        print(f.read())
+
+    # Convert CSV to JSON
+    data = convert_csv_to_json(input_file, output_file)
+    print(f"Converted {len(data)} rows to JSON.")
+
+    # Display JSON file
+    print("\nJSON file data:")
+    with open(output_file, "r") as f:
+        print(f.read())
