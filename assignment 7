@@ -1,0 +1,47 @@
+import re
+
+# Email pattern
+EMAIL_PATTERN = r'[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9.-]+'
+
+
+# Find emails from the given text
+def find_emails(text):
+    return re.findall(EMAIL_PATTERN, text)
+
+
+# Check if an email is valid
+def is_valid_email(candidate):
+    return re.fullmatch(EMAIL_PATTERN, candidate) is not None
+
+
+# Main program
+if __name__ == "__main__":
+    sample_text = """
+    My name is Piyush.
+    My email is piyush.theng@example.com
+    Another email is piyush2006@gmail.com
+    Some invalid examples are: not-an-email, @missing.com, plain.text@
+    """
+
+    print("Original text:")
+    print(sample_text)
+
+    # Find all emails
+    found = find_emails(sample_text)
+    print(f"Found {len(found)} email address(es) in the text:")
+    for email in found:
+        print(f"  - {email}")
+
+    # Check some email addresses
+    print("\nChecking email addresses:")
+    test_cases = [
+        "piyush.theng@example.com",
+        "piyush2006@gmail.com",
+        "invalid-email",
+        "user@site",
+        "plain.text@"
+    ]
+
+    for candidate in test_cases:
+        result = "VALID" if is_valid_email(candidate) else "INVALID"
+        print(f"  {candidate:30s} -> {result}")
